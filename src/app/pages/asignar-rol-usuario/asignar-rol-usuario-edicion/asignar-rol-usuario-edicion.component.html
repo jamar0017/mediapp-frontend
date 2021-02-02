@@ -1,0 +1,50 @@
+<form class="example-container" [formGroup]="form" #frmUsuario="ngForm" (ngSubmit)="operar()">
+
+    <div [hidden]="true">
+        <mat-form-field>
+            <input matInput placeholder="ID" required formControlName="idUsuario">
+        </mat-form-field>
+    </div>
+
+    <mat-form-field>        
+        <input matInput placeholder="Username" required formControlName="username">
+    </mat-form-field>
+
+    <div>
+        <span>Roles Actuales</span>
+        <mat-toolbar *ngFor="let e of getRoles()">
+            {{e.nombre}}
+            <span class="example-spacer"></span>
+        </mat-toolbar>    
+    </div>
+    
+    <mat-form-field>
+        <mat-select placeholder="Roles Disponibles" [(value)]="rolDefault"
+            (selectionChange)="seleccionarRol($event)">
+            <mat-option *ngFor="let p of rolesDisponibles" [value]="p">
+                {{p.nombre}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div>
+        <span>Nuevos Roles</span>
+        <mat-toolbar *ngFor="let e of rolesPorAsignar; let i=index">
+            {{e.nombre}}
+            <button mat-raised-button color="warn" type="button" (click)="removerRol(i)">
+                <mat-icon>delete</mat-icon>
+            </button>
+            <span class="example-spacer"></span>
+        </mat-toolbar>    
+    </div>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="frmUsuario.invalid">
+        <mat-icon>done</mat-icon>
+        <span>Aceptar</span>
+    </button>
+    <button mat-raised-button color="accent" routerLink='/asignar-rol-usuario' type="button">
+        <mat-icon>close</mat-icon>
+        <span>Cancelar</span>
+    </button>
+
+</form>
